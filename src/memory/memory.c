@@ -162,7 +162,7 @@ int allocate_physical_page_info(void)
 
     if (in_atomic())
     {
-        ls_log_tag("vmem", "原子上下文禁止调用 vmalloc\n");
+        pr_err("原子上下文禁止调用 vmalloc\n");
         return -EPERM;
     }
 
@@ -172,7 +172,7 @@ int allocate_physical_page_info(void)
     vaddr = (uint64_t)vmalloc(PAGE_SIZE);
     if (!vaddr)
     {
-        ls_log_tag("vmem", "vmalloc 失败\n");
+        pr_err("vmalloc 失败\n");
         return -ENOMEM;
     }
 
@@ -183,7 +183,7 @@ int allocate_physical_page_info(void)
     ptep = get_kernel_pte(vaddr);
     if (!ptep)
     {
-        ls_log_tag("vmem", "获取 PTE 失败\n");
+        pr_err("获取 PTE 失败\n");
         goto err_out;
     }
 
@@ -198,7 +198,7 @@ err_out:
     return -EFAULT;
 }
 // 释放
-static inline void free_phys_page(void)
+void free_phys_page(void)
 {
     if (pte_page.base_addr)
     {
@@ -460,7 +460,7 @@ int pte_process_memory_rw_cached(enum request_op op, pid_t pid, uint64_t vaddr, 
             if (current_vaddr >= task_size || bytes_this_page > task_size - current_vaddr) {
                 status = -EFAULT;
                 cached_vpage = -1ULL;
-                if (op == request_op_vmem_read && size > 8)
+                if (op ==REQ_PTE_PHYS_READ_MEMORY  && size > 8)
                     memset((uint8_t *)buffer + bytes_copied, 0, bytes_this_page);
                 goto next_chunk;
             }
@@ -469,7 +469,7 @@ int pte_process_memory_rw_cached(enum request_op op, pid_t pid, uint64_t vaddr, 
             status = walk_translate_va_to_pa(mm, current_vpn, &paddr_of_page);
             if (status != 0) {
                 cached_vpage = -1ULL;
-                if (op == request_op_vmem_read && size > 8)
+                if (op == REQ_PTE_PHYS_READ_MEMORY && size > 8)
                     memset((uint8_t *)buffer + bytes_copied, 0, bytes_this_page);
                 goto next_chunk;
             }
@@ -480,7 +480,7 @@ int pte_process_memory_rw_cached(enum request_op op, pid_t pid, uint64_t vaddr, 
         }
 
         // PTE 读写
-        if (op == PTE_PHYS_READ_MEMORY) {
+        if (op == REQ_PTE_PHYS_READ_MEMORY) {
             status = pte_read_physical(paddr_of_page + page_offset,
                                        (uint8_t *)buffer + bytes_copied,
                                        bytes_this_page);
@@ -492,7 +492,7 @@ int pte_process_memory_rw_cached(enum request_op op, pid_t pid, uint64_t vaddr, 
 
         if (status != 0) {
             cached_vpage = -1ULL;
-            if (op == PTE_PHYS_READ_MEMORY && size > 8)
+            if (op == REQ_PTE_PHYS_READ_MEMORY && size > 8)
                 memset((uint8_t *)buffer + bytes_copied, 0, bytes_this_page);
             goto next_chunk;
         }

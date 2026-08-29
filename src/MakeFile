@@ -4,7 +4,8 @@ obj-m :=$(MODULE).o
 $(MODULE)-objs += driver.o
 $(MODULE)-objs += util/util.o
 $(MODULE)-objs += ioctl/ioctl.o
-$(MODLUE)-objs += memroy/memroy.o
+$(MODULE)-objs += memory/memory.o
+
 
 EXTRA_CFLAGS += -DHIDE_SELF_MODULE=0	# 是否在模块表中移除自己
 EXTRA_CFLAGS += -DBUILD_REMAP=1	# 是否编译内存重映射API（不稳定）

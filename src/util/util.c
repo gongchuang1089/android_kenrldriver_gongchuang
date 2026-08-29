@@ -154,7 +154,7 @@ bool is_file_exist(const char *filename) {
     return false;
 }
 //pgd->p4d(为了兼容性加的)->pud->pmd->pte
-static inline pte_t *get_kernel_pte(uint64_t vaddr)
+pte_t *get_kernel_pte(uint64_t vaddr)
 {
     pgd_t *pgd=get_kernel_pgd_base()+pgd_index(vaddr);
     if (pgd_bad(*pgd)||pgd_none(*pgd))
@@ -225,7 +225,7 @@ static inline struct task_struct *get_task_by_pid(pid_t pid)
 }
 
 // 根据 pid 获取 mm_struct，调用方负责 mmput。
-static inline struct mm_struct *get_mm_by_pid(pid_t pid)
+struct mm_struct *get_mm_by_pid(pid_t pid)
 {
     struct task_struct *task = get_task_by_pid(pid);
     if (!task) return NULL;

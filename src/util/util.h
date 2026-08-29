@@ -21,7 +21,7 @@ int is_pid_alive(pid_t pid);
 
 bool is_file_exist(const char *filename) ;
 
-static inline pte_t *get_kernel_pte(uint64_t vaddr);
+pte_t *get_kernel_pte(uint64_t vaddr);
 static inline struct task_struct *get_task_by_pid(pid_t pid);
-static inline struct mm_struct *get_mm_by_pid(pid_t pid);
+struct mm_struct *get_mm_by_pid(pid_t pid);
 #endif /*GONGCHUANG_UTIL_H*/
