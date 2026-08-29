@@ -1,4 +1,4 @@
-# Android Kernel Driver - Advanced Memory Manipulation Framework
+# Android Kernel Driver
 
 > A powerful Android kernel driver supporting Linux kernel 5.1 to 6.12 (Android 12-16), providing advanced memory manipulation capabilities through a custom network protocol family.
 
