@@ -30,7 +30,7 @@
 | **Driver Concealment** | Hide driver traces from system | List deletion + kobject removal | ✅ Implemented |
 | **Hardware MMU Translation** | Address translation using AT instruction | ARM64 AT S1E0R instruction | ❌ Not Implemented |
 | **Touch Device Emulation** | Simulate touch input events | uinput/input subsystem | ❌ Not Implemented |
-
+| **Driver Self-Hiding ** |Driver Self-Hiding Hide driver traces from system List deletion + kobject removal| ✅ Implemented|
 ### Technical Highlights
 
 - ✅ **Multi-version Compatible**: Supports Linux kernel 5.1 to 6.12
