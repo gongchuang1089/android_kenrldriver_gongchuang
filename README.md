@@ -3,7 +3,7 @@
 > A powerful Android kernel driver supporting Linux kernel 5.1 to 6.12 (Android 12-16), providing advanced memory manipulation capabilities through a custom network protocol family.
 
 ## 📑 Table of Contents
-
+[![中文文档](https://img.shields.io/badge/文档-中文-red.svg)](README_CN.md)
 - [Features](#-features)
 - [Technical Architecture](#-technical-architecture)
 - [Requirements](#-requirements)
