@@ -212,6 +212,8 @@ entries entries entries entries entries page
 - [ ] 实现虚拟触摸设备
 - [ ] 支持多点触摸协议（Type B）
 - [ ] 模拟滑动、点击等手势
+      
+- [ ] cfi绕过
 
 ## 🔒 安全声明
 
