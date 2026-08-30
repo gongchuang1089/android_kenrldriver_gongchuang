@@ -26,15 +26,14 @@ struct pte_phys_page
     void *base_addr;
     size_t size;
     pte_t *pte_addr;
+    pte_t orig_pte;
 };
-
+static struct pte_phys_page pte_page;
 enum request_op
 {
    REQ_PTE_PHYS_READ_MEMORY,
    REQ_PTE_PHYS_WRITE_MEMORY,
 };
-
-static struct pte_phys_page pte_page;
 
 uintptr_t Get_Module_Base(pid_t pid, char *name, int vm_flag);
 int access_process_vm_by_pid(pid_t from, void __user *from_addr, pid_t to, void __user*to_addr, size_t size);
