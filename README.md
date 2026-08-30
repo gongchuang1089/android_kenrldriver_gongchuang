@@ -22,7 +22,7 @@
 
 | Feature | Description | Implementation | Status |
 |---------|-------------|----------------|--------|
-| **PTE Physical Memory R/W** | Direct access to arbitrary physical memory | Manual page table walk + PTE remapping | ✅ Implemented |
+| **PTE Physical Memory R/W** now not support wait me write pterw | Direct access to arbitrary physical memory | Manual page table walk + PTE remapping | ✅ Implemented |
 | **Memory R/W** | Cross-process memory read/write | use access_process_vm | ✅ Implemented |
 | **Module Base Resolution** | Locate loaded module base addresses | VMA traversal + file path matching | ✅ Implemented |
 | **Process Discovery** | Find PID by package/process name | Process traversal + name matching | ✅ Implemented |
