@@ -214,6 +214,8 @@ entries entries entries entries entries page
 - [ ] Support multi-touch protocol (Type B)
 - [ ] Simulate swipe, tap gestures
 
+- [ ]  CFI Bypass
+
 ## 🔒 Security Notice
 
 ### ⚠️ Warning
