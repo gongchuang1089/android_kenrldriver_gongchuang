@@ -206,9 +206,9 @@ entries entries entries entries entries page
 ## 🚧 Upcoming Features
 
 ### Hardware MMU Translation
-- [*] Address translation using ARM64 `AT S1E0R` instruction
-- [ ] Handle translation failure SEA (Synchronous External Abort)
-- [ ] Optimize translation performance
+- [✅ ] Address translation using ARM64 `AT S1E0R` instruction
+- [✅] Handle translation failure SEA (Synchronous External Abort)
+- [✅] Optimize translation performance
 
 ### Touch Device Emulation
 - [ ] Implement virtual touch device
