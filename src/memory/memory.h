@@ -26,7 +26,6 @@ struct pte_phys_page
     void *base_addr;
     size_t size;
     pte_t *pte_addr;
-    pte_t orig_pte;
 };
 static struct pte_phys_page pte_page;
 enum request_op

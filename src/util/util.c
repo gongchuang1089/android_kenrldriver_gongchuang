@@ -2,7 +2,7 @@
 
 unsigned long gongchuang_kallsyms_lookup_name(const char *symbol_name) 
 {
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 7, 0)
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 7, 0)//在内核版本5.7以后kallsyms_lookup_name就不导出了
     typedef unsigned long (*kallsyms_lookup_name_t)(const char *name);
 
     struct kprobe kp={0};
