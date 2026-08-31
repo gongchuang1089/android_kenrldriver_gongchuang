@@ -176,7 +176,12 @@ pte_t *get_kernel_pte(uint64_t vaddr)
     
     if (pud_leaf(*pud))
     {
-        return NULL;
+		 // 检查pfn
+        unsigned long pfn = pud_pfn(*pud);
+        if (!pfn_valid(pfn)) return -EFAULT;
+
+        *paddr = (pud_pfn(*pud) << PAGE_SHIFT) + (vaddr & ~PUD_MASK);
+        return 0;
     }
 
     if (pud_bad(*pud))
@@ -192,7 +197,13 @@ pte_t *get_kernel_pte(uint64_t vaddr)
     
     if (pmd_leaf(*pmd))
     {
-        return NULL;
+        
+        // 检查pfn
+        unsigned long pfn = pmd_pfn(*pmd);
+        if (!pfn_valid(pfn)) return -EFAULT;
+
+        *paddr = (pmd_pfn(*pmd) << PAGE_SHIFT) + (vaddr & ~PMD_MASK);
+        return 0;
     }
     
     if (pmd_bad(*pmd))
@@ -207,7 +218,11 @@ pte_t *get_kernel_pte(uint64_t vaddr)
     }
     if (!pte_present(*ptep))
     {
-        return NULL;
+        // 检查pfn
+        unsigned long pfn = pte_pfn(pte);
+        if (!pfn_valid(pfn)) return -EFAULT;
+
+        *paddr = (pte_pfn(pte) << PAGE_SHIFT) + (vaddr & ~PAGE_MASK);
     }
     
     
