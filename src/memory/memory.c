@@ -190,7 +190,6 @@ int allocate_physical_page_info(void)
     pte_page.base_addr = (void *)vaddr;
     pte_page.size = PAGE_SIZE;
     pte_page.pte_addr = ptep;
-	pte_page.orig_pte = *ptep;
     return 0;
 
 err_out:
@@ -203,8 +202,6 @@ void free_phys_page(void)
 {
     if (pte_page.base_addr)
     {
-		set_pte(pte_page.pte_addr, pte_page.orig_pte);
-        flush_tlb_addr_all_asid_all_cpus((uint64_t)pte_page.base_addr);
         // 释放之前通过 vmalloc 分配的虚拟内存
         vfree(pte_page.base_addr);
         __builtin_memset(&pte_page, 0, sizeof(pte_page));
