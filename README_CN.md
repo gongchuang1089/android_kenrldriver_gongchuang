@@ -205,9 +205,9 @@ entries entries entries entries entries page
 ## 🚧 待实现功能
 
 ### 硬件 MMU 翻译
-- [ ] 使用 ARM64 `AT S1E0R` 指令进行地址翻译
-- [ ] 处理翻译失败的 SEA（Synchronous External Abort）
-- [ ] 优化翻译性能
+- [ ✅ ] 使用 ARM64 `AT S1E0R` 指令进行地址翻译
+- [ ✅ ] 处理翻译失败的 SEA（Synchronous External Abort）
+- [✅  ] 优化翻译性能
 
 ### 触摸设备模拟
 - [ ] 实现虚拟触摸设备
