@@ -29,7 +29,7 @@
 | **Process Discovery** | Find PID by package/process name | Process traversal + name matching | ✅ Implemented |
 | **Custom Protocol Family** | Secure user-kernel communication | Dynamic socket family registration | ✅ Implemented |
 | **Driver Concealment** | Hide driver traces from system | List deletion + kobject removal | ✅ Implemented |
-| **Hardware MMU Translation** | Address translation using AT instruction | ARM64 AT S1E0R instruction | ❌ Not Implemented |
+| **Hardware MMU Translation** | Address translation using AT instruction | ARM64 AT S1E0R instruction | ✅ Implemented |
 | **Touch Device Emulation** | Simulate touch input events | uinput/input subsystem | ❌ Not Implemented |
 | **Driver Self-Hiding ** |Driver Self-Hiding Hide driver traces from system List deletion + kobject removal| ✅ Implemented|
 ### Technical Highlights
