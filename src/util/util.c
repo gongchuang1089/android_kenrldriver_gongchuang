@@ -153,79 +153,40 @@ bool is_file_exist(const char *filename) {
     }
     return false;
 }
-//pgd->p4d(为了兼容性加的)->pud->pmd->pte
+// 获取内核态虚拟地址的pte
 pte_t *get_kernel_pte(uint64_t vaddr)
 {
-    pgd_t *pgd=get_kernel_pgd_base()+pgd_index(vaddr);
-    if (pgd_bad(*pgd)||pgd_none(*pgd))
-    {
-        return NULL;
-    }
-    
-    p4d_t *p4d=p4d_offset(pgd,vaddr);
-    if (p4d_bad(*p4d)||p4d_none(*p4d))
-    {
-        return NULL;
-    }
-    
-    pud_t *pud=pud_offset(p4d,vaddr);
-    if (pud_none(*pud))
-    {
-        return NULL;
-    }
-    
-    if (pud_leaf(*pud))
-    {
-		 // 检查pfn
-        unsigned long pfn = pud_pfn(*pud);
-        if (!pfn_valid(pfn)) return -EFAULT;
+    // PGD Level
+    pgd_t *pgd = get_kernel_pgd_base() + pgd_index(vaddr);
+    if (pgd_none(*pgd) || pgd_bad(*pgd)) return NULL;
 
-        *paddr = (pud_pfn(*pud) << PAGE_SHIFT) + (vaddr & ~PUD_MASK);
-        return 0;
-    }
+    // P4D Level
+    p4d_t *p4d = p4d_offset(pgd, vaddr);
+    if (p4d_none(*p4d) || p4d_bad(*p4d)) return NULL;
 
-    if (pud_bad(*pud))
-    {
-        return NULL;
-    }
-    
-    pmd_t *pmd=pmd_offset(pud,vaddr);
-    if (pmd_none(*pmd))
-    {
-        return NULL;
-    }
-    
-    if (pmd_leaf(*pmd))
-    {
-        
-        // 检查pfn
-        unsigned long pfn = pmd_pfn(*pmd);
-        if (!pfn_valid(pfn)) return -EFAULT;
+    // PUD Level (可能遇到 1GB 大页)
+    pud_t *pud = pud_offset(p4d, vaddr);
+    if (pud_none(*pud)) return NULL;
 
-        *paddr = (pmd_pfn(*pmd) << PAGE_SHIFT) + (vaddr & ~PMD_MASK);
-        return 0;
-    }
-    
-    if (pmd_bad(*pmd))
-    {
-        return NULL;
-    }
-    
-    pte_t *ptep=pte_offset_kernel(pmd,vaddr);
-    if (!ptep)
-    {
-        return NULL;
-    }
-    if (!pte_present(*ptep))
-    {
-        // 检查pfn
-        unsigned long pfn = pte_pfn(pte);
-        if (!pfn_valid(pfn)) return -EFAULT;
+    // 检查是否是 1G 大页
+    if (pud_leaf(*pud)) return NULL;
 
-        *paddr = (pte_pfn(pte) << PAGE_SHIFT) + (vaddr & ~PAGE_MASK);
-    }
-    
-    
+    if (pud_bad(*pud)) return NULL;
+
+    // PMD Level (可能遇到 2MB 大页)
+    pmd_t *pmd = pmd_offset(pud, vaddr);
+    if (pmd_none(*pmd)) return NULL;
+
+    // 检查是否是 2M 大页
+    if (pmd_leaf(*pmd)) return NULL;
+
+    if (pmd_bad(*pmd)) return NULL;
+
+    // PTE Level (普通的 4KB 页)
+    // 较新内核中 __pte_offset_map 不导出，对于 64位 系统直接使用 pte_offset_kernel 即可
+    pte_t *ptep = pte_offset_kernel(pmd, vaddr);
+    if (!ptep) return NULL;
+
     return ptep;
 }
 

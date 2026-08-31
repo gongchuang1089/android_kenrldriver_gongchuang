@@ -1,7 +1,5 @@
 #ifndef GONGCHUANG_UTIL_H
 #define GONGCHUANG_UTIL_H
-#define PAGE_MASK  (~(PAGE_SIZE - 1))
-#define PAGE_SHIFT 12
 
 #include <linux/fs.h>
 #include <linux/namei.h>
